@@ -36,8 +36,7 @@ var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require
 */
 var BaseModule = class {};
 function formatMap(templateString, valueMap) {
-	const regex = /\{([^}]+)\}/g;
-	return templateString.replace(regex, (match, key) => {
+	return templateString.replace(/\{([^}]+)\}/g, (match, key) => {
 		if (Object.prototype.hasOwnProperty.call(valueMap, key)) {
 			const value = valueMap[key];
 			return value !== void 0 && value !== null ? String(value) : "";
@@ -83,20 +82,20 @@ function getValueByPath(data, keys) {
 	try {
 		if (keys.length === 1 && keys[0] === "_self") return data;
 		for (let i = 0; i < keys.length; i++) {
-			if (typeof data !== "object" || data === null) return void 0;
+			if (typeof data !== "object" || data === null) return;
 			const key = keys[i];
 			if (key.endsWith("[]")) {
 				const keyName = key.slice(0, -2);
 				if (keyName in data) {
 					const arrayData = data[keyName];
-					if (!Array.isArray(arrayData)) return void 0;
+					if (!Array.isArray(arrayData)) return;
 					return arrayData.map((d) => getValueByPath(d, keys.slice(i + 1)));
-				} else return void 0;
+				} else return;
 			} else data = data[key];
 		}
 		return data;
 	} catch (error) {
-		if (error instanceof TypeError) return void 0;
+		if (error instanceof TypeError) return;
 		throw error;
 	}
 }
@@ -341,8 +340,7 @@ function functionDeclarationToMldev$2(apiClient, fromObject) {
 	return toObject;
 }
 function googleSearchToMldev$2() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function dynamicRetrievalConfigToMldev$2(apiClient, fromObject) {
 	const toObject = {};
@@ -366,8 +364,7 @@ function toolToMldev$2(apiClient, fromObject) {
 	}));
 	else setValueByPath(toObject, ["functionDeclarations"], fromFunctionDeclarations);
 	if (getValueByPath(fromObject, ["retrieval"]) !== void 0) throw new Error("retrieval parameter is not supported in Gemini API.");
-	const fromGoogleSearch = getValueByPath(fromObject, ["googleSearch"]);
-	if (fromGoogleSearch != null) setValueByPath(toObject, ["googleSearch"], googleSearchToMldev$2());
+	if (getValueByPath(fromObject, ["googleSearch"]) != null) setValueByPath(toObject, ["googleSearch"], googleSearchToMldev$2());
 	const fromGoogleSearchRetrieval = getValueByPath(fromObject, ["googleSearchRetrieval"]);
 	if (fromGoogleSearchRetrieval != null) setValueByPath(toObject, ["googleSearchRetrieval"], googleSearchRetrievalToMldev$2(apiClient, fromGoogleSearchRetrieval));
 	const fromCodeExecution = getValueByPath(fromObject, ["codeExecution"]);
@@ -560,8 +557,7 @@ function functionDeclarationToVertex$2(apiClient, fromObject) {
 	return toObject;
 }
 function googleSearchToVertex$2() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function dynamicRetrievalConfigToVertex$2(apiClient, fromObject) {
 	const toObject = {};
@@ -586,8 +582,7 @@ function toolToVertex$2(apiClient, fromObject) {
 	else setValueByPath(toObject, ["functionDeclarations"], fromFunctionDeclarations);
 	const fromRetrieval = getValueByPath(fromObject, ["retrieval"]);
 	if (fromRetrieval != null) setValueByPath(toObject, ["retrieval"], fromRetrieval);
-	const fromGoogleSearch = getValueByPath(fromObject, ["googleSearch"]);
-	if (fromGoogleSearch != null) setValueByPath(toObject, ["googleSearch"], googleSearchToVertex$2());
+	if (getValueByPath(fromObject, ["googleSearch"]) != null) setValueByPath(toObject, ["googleSearch"], googleSearchToVertex$2());
 	const fromGoogleSearchRetrieval = getValueByPath(fromObject, ["googleSearchRetrieval"]);
 	if (fromGoogleSearchRetrieval != null) setValueByPath(toObject, ["googleSearchRetrieval"], googleSearchRetrievalToVertex$2(apiClient, fromGoogleSearchRetrieval));
 	const fromCodeExecution = getValueByPath(fromObject, ["codeExecution"]);
@@ -705,8 +700,7 @@ function cachedContentFromMldev(apiClient, fromObject) {
 	return toObject;
 }
 function deleteCachedContentResponseFromMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function listCachedContentsResponseFromMldev(apiClient, fromObject) {
 	const toObject = {};
@@ -738,8 +732,7 @@ function cachedContentFromVertex(apiClient, fromObject) {
 	return toObject;
 }
 function deleteCachedContentResponseFromVertex() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function listCachedContentsResponseFromVertex(apiClient, fromObject) {
 	const toObject = {};
@@ -1199,7 +1192,7 @@ var GenerateContentResponse = class {
 	*/
 	get text() {
 		var _a, _b, _c, _d, _e, _f, _g, _h;
-		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return void 0;
+		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return;
 		if (this.candidates && this.candidates.length > 1) console.warn("there are multiple candidates in the response, returning text from the first one.");
 		let text = "";
 		let anyTextPartText = false;
@@ -1262,10 +1255,10 @@ var GenerateContentResponse = class {
 	*/
 	get functionCalls() {
 		var _a, _b, _c, _d, _e, _f, _g, _h;
-		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return void 0;
+		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return;
 		if (this.candidates && this.candidates.length > 1) console.warn("there are multiple candidates in the response, returning function calls from the first one.");
 		const functionCalls = (_h = (_g = (_f = (_e = this.candidates) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.content) === null || _g === void 0 ? void 0 : _g.parts) === null || _h === void 0 ? void 0 : _h.filter((part) => part.functionCall).map((part) => part.functionCall).filter((functionCall) => functionCall !== void 0);
-		if ((functionCalls === null || functionCalls === void 0 ? void 0 : functionCalls.length) === 0) return void 0;
+		if ((functionCalls === null || functionCalls === void 0 ? void 0 : functionCalls.length) === 0) return;
 		return functionCalls;
 	}
 	/**
@@ -1293,10 +1286,10 @@ var GenerateContentResponse = class {
 	*/
 	get executableCode() {
 		var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return void 0;
+		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return;
 		if (this.candidates && this.candidates.length > 1) console.warn("there are multiple candidates in the response, returning executable code from the first one.");
 		const executableCode = (_h = (_g = (_f = (_e = this.candidates) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.content) === null || _g === void 0 ? void 0 : _g.parts) === null || _h === void 0 ? void 0 : _h.filter((part) => part.executableCode).map((part) => part.executableCode).filter((executableCode$1) => executableCode$1 !== void 0);
-		if ((executableCode === null || executableCode === void 0 ? void 0 : executableCode.length) === 0) return void 0;
+		if ((executableCode === null || executableCode === void 0 ? void 0 : executableCode.length) === 0) return;
 		return (_j = executableCode === null || executableCode === void 0 ? void 0 : executableCode[0]) === null || _j === void 0 ? void 0 : _j.code;
 	}
 	/**
@@ -1323,10 +1316,10 @@ var GenerateContentResponse = class {
 	*/
 	get codeExecutionResult() {
 		var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return void 0;
+		if (((_d = (_c = (_b = (_a = this.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) === null || _d === void 0 ? void 0 : _d.length) === 0) return;
 		if (this.candidates && this.candidates.length > 1) console.warn("there are multiple candidates in the response, returning code execution result from the first one.");
 		const codeExecutionResult = (_h = (_g = (_f = (_e = this.candidates) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.content) === null || _g === void 0 ? void 0 : _g.parts) === null || _h === void 0 ? void 0 : _h.filter((part) => part.codeExecutionResult).map((part) => part.codeExecutionResult).filter((codeExecutionResult$1) => codeExecutionResult$1 !== void 0);
-		if ((codeExecutionResult === null || codeExecutionResult === void 0 ? void 0 : codeExecutionResult.length) === 0) return void 0;
+		if ((codeExecutionResult === null || codeExecutionResult === void 0 ? void 0 : codeExecutionResult.length) === 0) return;
 		return (_j = codeExecutionResult === null || codeExecutionResult === void 0 ? void 0 : codeExecutionResult[0]) === null || _j === void 0 ? void 0 : _j.output;
 	}
 };
@@ -1434,8 +1427,7 @@ var Caches = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = cachedContentFromVertex(this.apiClient, apiResponse);
-				return resp;
+				return cachedContentFromVertex(this.apiClient, apiResponse);
 			});
 		} else {
 			const body = createCachedContentParametersToMldev(this.apiClient, params);
@@ -1454,8 +1446,7 @@ var Caches = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = cachedContentFromMldev(this.apiClient, apiResponse);
-				return resp;
+				return cachedContentFromMldev(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -1492,8 +1483,7 @@ var Caches = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = cachedContentFromVertex(this.apiClient, apiResponse);
-				return resp;
+				return cachedContentFromVertex(this.apiClient, apiResponse);
 			});
 		} else {
 			const body = getCachedContentParametersToMldev(this.apiClient, params);
@@ -1512,8 +1502,7 @@ var Caches = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = cachedContentFromMldev(this.apiClient, apiResponse);
-				return resp;
+				return cachedContentFromMldev(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -1615,8 +1604,7 @@ var Caches = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = cachedContentFromVertex(this.apiClient, apiResponse);
-				return resp;
+				return cachedContentFromVertex(this.apiClient, apiResponse);
 			});
 		} else {
 			const body = updateCachedContentParametersToMldev(this.apiClient, params);
@@ -1635,8 +1623,7 @@ var Caches = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = cachedContentFromMldev(this.apiClient, apiResponse);
-				return resp;
+				return cachedContentFromMldev(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -1693,31 +1680,18 @@ var Caches = class extends BaseModule {
 	}
 };
 /******************************************************************************
-
 Copyright (c) Microsoft Corporation.
 
-
-
 Permission to use, copy, modify, and/or distribute this software for any
-
 purpose with or without fee is hereby granted.
 
-
-
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-
 REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-
 AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-
 INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-
 LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-
 PERFORMANCE OF THIS SOFTWARE.
-
 ***************************************************************************** */
 function __values(o) {
 	var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -1954,11 +1928,9 @@ var Chat = class {
 		});
 		this.sendPromise = (async () => {
 			var _a$1, _b;
-			const response = await responsePromise;
-			const outputContent = (_b = (_a$1 = response.candidates) === null || _a$1 === void 0 ? void 0 : _a$1[0]) === null || _b === void 0 ? void 0 : _b.content;
+			const outputContent = (_b = (_a$1 = (await responsePromise).candidates) === null || _a$1 === void 0 ? void 0 : _a$1[0]) === null || _b === void 0 ? void 0 : _b.content;
 			const modelOutput = outputContent ? [outputContent] : [];
 			this.recordHistory(inputContent, modelOutput);
-			return;
 		})();
 		await this.sendPromise;
 		return responsePromise;
@@ -1996,8 +1968,7 @@ var Chat = class {
 		});
 		this.sendPromise = streamResponse.then(() => void 0);
 		const response = await streamResponse;
-		const result = this.processStreamResponse(response, inputContent);
-		return result;
+		return this.processStreamResponse(response, inputContent);
 	}
 	/**
 	* Returns the chat history.
@@ -2203,12 +2174,10 @@ function listFilesResponseFromMldev(apiClient, fromObject) {
 	return toObject;
 }
 function createFileResponseFromMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function deleteFileResponseFromMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 /**
 * @license
@@ -2286,8 +2255,7 @@ var Files = class extends BaseModule {
 	async upload(params) {
 		if (this.apiClient.isVertexAI()) throw new Error("Vertex AI does not support uploading files. You can share files through a GCS bucket.");
 		return this.apiClient.uploadFile(params.file, params.config).then((response) => {
-			const file = fileFromMldev(this.apiClient, response);
-			return file;
+			return fileFromMldev(this.apiClient, response);
 		});
 	}
 	async listInternal(params) {
@@ -2388,8 +2356,7 @@ var Files = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = fileFromMldev(this.apiClient, apiResponse);
-				return resp;
+				return fileFromMldev(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -2579,12 +2546,10 @@ function functionDeclarationToVertex$1(apiClient, fromObject) {
 	return toObject;
 }
 function googleSearchToMldev$1() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function googleSearchToVertex$1() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function dynamicRetrievalConfigToMldev$1(apiClient, fromObject) {
 	const toObject = {};
@@ -2622,8 +2587,7 @@ function toolToMldev$1(apiClient, fromObject) {
 	}));
 	else setValueByPath(toObject, ["functionDeclarations"], fromFunctionDeclarations);
 	if (getValueByPath(fromObject, ["retrieval"]) !== void 0) throw new Error("retrieval parameter is not supported in Gemini API.");
-	const fromGoogleSearch = getValueByPath(fromObject, ["googleSearch"]);
-	if (fromGoogleSearch != null) setValueByPath(toObject, ["googleSearch"], googleSearchToMldev$1());
+	if (getValueByPath(fromObject, ["googleSearch"]) != null) setValueByPath(toObject, ["googleSearch"], googleSearchToMldev$1());
 	const fromGoogleSearchRetrieval = getValueByPath(fromObject, ["googleSearchRetrieval"]);
 	if (fromGoogleSearchRetrieval != null) setValueByPath(toObject, ["googleSearchRetrieval"], googleSearchRetrievalToMldev$1(apiClient, fromGoogleSearchRetrieval));
 	const fromCodeExecution = getValueByPath(fromObject, ["codeExecution"]);
@@ -2639,8 +2603,7 @@ function toolToVertex$1(apiClient, fromObject) {
 	else setValueByPath(toObject, ["functionDeclarations"], fromFunctionDeclarations);
 	const fromRetrieval = getValueByPath(fromObject, ["retrieval"]);
 	if (fromRetrieval != null) setValueByPath(toObject, ["retrieval"], fromRetrieval);
-	const fromGoogleSearch = getValueByPath(fromObject, ["googleSearch"]);
-	if (fromGoogleSearch != null) setValueByPath(toObject, ["googleSearch"], googleSearchToVertex$1());
+	if (getValueByPath(fromObject, ["googleSearch"]) != null) setValueByPath(toObject, ["googleSearch"], googleSearchToVertex$1());
 	const fromGoogleSearchRetrieval = getValueByPath(fromObject, ["googleSearchRetrieval"]);
 	if (fromGoogleSearchRetrieval != null) setValueByPath(toObject, ["googleSearchRetrieval"], googleSearchRetrievalToVertex$1(apiClient, fromGoogleSearchRetrieval));
 	const fromCodeExecution = getValueByPath(fromObject, ["codeExecution"]);
@@ -2663,12 +2626,10 @@ function sessionResumptionConfigToVertex(apiClient, fromObject) {
 	return toObject;
 }
 function audioTranscriptionConfigToMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function audioTranscriptionConfigToVertex() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function automaticActivityDetectionToMldev(apiClient, fromObject) {
 	const toObject = {};
@@ -2904,12 +2865,10 @@ function liveConnectParametersToVertex(apiClient, fromObject) {
 	return toObject;
 }
 function liveServerSetupCompleteFromMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function liveServerSetupCompleteFromVertex() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function partFromMldev$1(apiClient, fromObject) {
 	const toObject = {};
@@ -3195,8 +3154,7 @@ function liveServerSessionResumptionUpdateFromVertex(apiClient, fromObject) {
 }
 function liveServerMessageFromMldev(apiClient, fromObject) {
 	const toObject = {};
-	const fromSetupComplete = getValueByPath(fromObject, ["setupComplete"]);
-	if (fromSetupComplete != null) setValueByPath(toObject, ["setupComplete"], liveServerSetupCompleteFromMldev());
+	if (getValueByPath(fromObject, ["setupComplete"]) != null) setValueByPath(toObject, ["setupComplete"], liveServerSetupCompleteFromMldev());
 	const fromServerContent = getValueByPath(fromObject, ["serverContent"]);
 	if (fromServerContent != null) setValueByPath(toObject, ["serverContent"], liveServerContentFromMldev(apiClient, fromServerContent));
 	const fromToolCall = getValueByPath(fromObject, ["toolCall"]);
@@ -3213,8 +3171,7 @@ function liveServerMessageFromMldev(apiClient, fromObject) {
 }
 function liveServerMessageFromVertex(apiClient, fromObject) {
 	const toObject = {};
-	const fromSetupComplete = getValueByPath(fromObject, ["setupComplete"]);
-	if (fromSetupComplete != null) setValueByPath(toObject, ["setupComplete"], liveServerSetupCompleteFromVertex());
+	if (getValueByPath(fromObject, ["setupComplete"]) != null) setValueByPath(toObject, ["setupComplete"], liveServerSetupCompleteFromVertex());
 	const fromServerContent = getValueByPath(fromObject, ["serverContent"]);
 	if (fromServerContent != null) setValueByPath(toObject, ["serverContent"], liveServerContentFromVertex(apiClient, fromServerContent));
 	const fromToolCall = getValueByPath(fromObject, ["toolCall"]);
@@ -3328,8 +3285,7 @@ function functionDeclarationToMldev(apiClient, fromObject) {
 	return toObject;
 }
 function googleSearchToMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function dynamicRetrievalConfigToMldev(apiClient, fromObject) {
 	const toObject = {};
@@ -3353,8 +3309,7 @@ function toolToMldev(apiClient, fromObject) {
 	}));
 	else setValueByPath(toObject, ["functionDeclarations"], fromFunctionDeclarations);
 	if (getValueByPath(fromObject, ["retrieval"]) !== void 0) throw new Error("retrieval parameter is not supported in Gemini API.");
-	const fromGoogleSearch = getValueByPath(fromObject, ["googleSearch"]);
-	if (fromGoogleSearch != null) setValueByPath(toObject, ["googleSearch"], googleSearchToMldev());
+	if (getValueByPath(fromObject, ["googleSearch"]) != null) setValueByPath(toObject, ["googleSearch"], googleSearchToMldev());
 	const fromGoogleSearchRetrieval = getValueByPath(fromObject, ["googleSearchRetrieval"]);
 	if (fromGoogleSearchRetrieval != null) setValueByPath(toObject, ["googleSearchRetrieval"], googleSearchRetrievalToMldev(apiClient, fromGoogleSearchRetrieval));
 	const fromCodeExecution = getValueByPath(fromObject, ["codeExecution"]);
@@ -3724,8 +3679,7 @@ function functionDeclarationToVertex(apiClient, fromObject) {
 	return toObject;
 }
 function googleSearchToVertex() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function dynamicRetrievalConfigToVertex(apiClient, fromObject) {
 	const toObject = {};
@@ -3750,8 +3704,7 @@ function toolToVertex(apiClient, fromObject) {
 	else setValueByPath(toObject, ["functionDeclarations"], fromFunctionDeclarations);
 	const fromRetrieval = getValueByPath(fromObject, ["retrieval"]);
 	if (fromRetrieval != null) setValueByPath(toObject, ["retrieval"], fromRetrieval);
-	const fromGoogleSearch = getValueByPath(fromObject, ["googleSearch"]);
-	if (fromGoogleSearch != null) setValueByPath(toObject, ["googleSearch"], googleSearchToVertex());
+	if (getValueByPath(fromObject, ["googleSearch"]) != null) setValueByPath(toObject, ["googleSearch"], googleSearchToVertex());
 	const fromGoogleSearchRetrieval = getValueByPath(fromObject, ["googleSearchRetrieval"]);
 	if (fromGoogleSearchRetrieval != null) setValueByPath(toObject, ["googleSearchRetrieval"], googleSearchRetrievalToVertex(apiClient, fromGoogleSearchRetrieval));
 	const fromCodeExecution = getValueByPath(fromObject, ["codeExecution"]);
@@ -4127,8 +4080,7 @@ function contentEmbeddingFromMldev(apiClient, fromObject) {
 	return toObject;
 }
 function embedContentMetadataFromMldev() {
-	const toObject = {};
-	return toObject;
+	return {};
 }
 function embedContentResponseFromMldev(apiClient, fromObject) {
 	const toObject = {};
@@ -4137,8 +4089,7 @@ function embedContentResponseFromMldev(apiClient, fromObject) {
 		return contentEmbeddingFromMldev(apiClient, item);
 	}));
 	else setValueByPath(toObject, ["embeddings"], fromEmbeddings);
-	const fromMetadata = getValueByPath(fromObject, ["metadata"]);
-	if (fromMetadata != null) setValueByPath(toObject, ["metadata"], embedContentMetadataFromMldev());
+	if (getValueByPath(fromObject, ["metadata"]) != null) setValueByPath(toObject, ["metadata"], embedContentMetadataFromMldev());
 	return toObject;
 }
 function imageFromMldev(apiClient, fromObject) {
@@ -4601,10 +4552,7 @@ var Live = class {
 		if (this.apiClient.isVertexAI()) {
 			url = `${websocketBaseUrl}/ws/google.cloud.aiplatform.${apiVersion}.LlmBidiService/BidiGenerateContent`;
 			await this.auth.addAuthHeaders(headers);
-		} else {
-			const apiKey = this.apiClient.getApiKey();
-			url = `${websocketBaseUrl}/ws/google.ai.generativelanguage.${apiVersion}.GenerativeService.BidiGenerateContent?key=${apiKey}`;
-		}
+		} else url = `${websocketBaseUrl}/ws/google.ai.generativelanguage.${apiVersion}.GenerativeService.BidiGenerateContent?key=${this.apiClient.getApiKey()}`;
 		let onopenResolve = () => {};
 		const onopenPromise = new Promise((resolve) => {
 			onopenResolve = resolve;
@@ -4628,11 +4576,7 @@ var Live = class {
 		conn.connect();
 		await onopenPromise;
 		let transformedModel = tModel(this.apiClient, params.model);
-		if (this.apiClient.isVertexAI() && transformedModel.startsWith("publishers/")) {
-			const project = this.apiClient.getProject();
-			const location = this.apiClient.getLocation();
-			transformedModel = `projects/${project}/locations/${location}/` + transformedModel;
-		}
+		if (this.apiClient.isVertexAI() && transformedModel.startsWith("publishers/")) transformedModel = `projects/${this.apiClient.getProject()}/locations/${this.apiClient.getLocation()}/` + transformedModel;
 		let clientMessage = {};
 		if (this.apiClient.isVertexAI() && ((_c = params.config) === null || _c === void 0 ? void 0 : _c.responseModalities) === void 0) if (params.config === void 0) params.config = { responseModalities: [Modality.AUDIO] };
 		else params.config.responseModalities = [Modality.AUDIO];
@@ -4697,8 +4641,7 @@ var Session = class {
 			if (typeof functionResponse !== "object" || functionResponse === null || !("name" in functionResponse) || !("response" in functionResponse)) throw new Error(`Could not parse function response, type '${typeof functionResponse}'.`);
 			if (!apiClient.isVertexAI() && !("id" in functionResponse)) throw new Error(FUNCTION_RESPONSE_REQUIRES_ID);
 		}
-		const clientMessage = { toolResponse: { functionResponses } };
-		return clientMessage;
+		return { toolResponse: { functionResponses } };
 	}
 	/**
 	Send a message over the established connection.
@@ -5049,8 +4992,7 @@ var Models = class extends BaseModule {
 						for (var _d = true, apiResponse_1 = __asyncValues(apiResponse), apiResponse_1_1; apiResponse_1_1 = yield __await(apiResponse_1.next()), _a$1 = apiResponse_1_1.done, !_a$1; _d = true) {
 							_c = apiResponse_1_1.value;
 							_d = false;
-							const chunk = _c;
-							const resp = generateContentResponseFromVertex(apiClient, yield __await(chunk.json()));
+							const resp = generateContentResponseFromVertex(apiClient, yield __await(_c.json()));
 							const typedResp = new GenerateContentResponse();
 							Object.assign(typedResp, resp);
 							yield yield __await(typedResp);
@@ -5088,8 +5030,7 @@ var Models = class extends BaseModule {
 						for (var _d = true, apiResponse_2 = __asyncValues(apiResponse), apiResponse_2_1; apiResponse_2_1 = yield __await(apiResponse_2.next()), _a$1 = apiResponse_2_1.done, !_a$1; _d = true) {
 							_c = apiResponse_2_1.value;
 							_d = false;
-							const chunk = _c;
-							const resp = generateContentResponseFromMldev(apiClient, yield __await(chunk.json()));
+							const resp = generateContentResponseFromMldev(apiClient, yield __await(_c.json()));
 							const typedResp = new GenerateContentResponse();
 							Object.assign(typedResp, resp);
 							yield yield __await(typedResp);
@@ -5279,8 +5220,7 @@ var Models = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = modelFromVertex(this.apiClient, apiResponse);
-				return resp;
+				return modelFromVertex(this.apiClient, apiResponse);
 			});
 		} else {
 			const body = getModelParametersToMldev(this.apiClient, params);
@@ -5299,8 +5239,7 @@ var Models = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = modelFromMldev(this.apiClient, apiResponse);
-				return resp;
+				return modelFromMldev(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -5463,8 +5402,7 @@ var Models = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = generateVideosOperationFromVertex$1(this.apiClient, apiResponse);
-				return resp;
+				return generateVideosOperationFromVertex$1(this.apiClient, apiResponse);
 			});
 		} else {
 			const body = generateVideosParametersToMldev(this.apiClient, params);
@@ -5483,8 +5421,7 @@ var Models = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = generateVideosOperationFromMldev$1(this.apiClient, apiResponse);
-				return resp;
+				return generateVideosOperationFromMldev$1(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -5662,8 +5599,7 @@ var Operations = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = generateVideosOperationFromVertex(this.apiClient, apiResponse);
-				return resp;
+				return generateVideosOperationFromVertex(this.apiClient, apiResponse);
 			});
 		} else {
 			const body = getOperationParametersToMldev(this.apiClient, params);
@@ -5682,8 +5618,7 @@ var Operations = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = generateVideosOperationFromMldev(this.apiClient, apiResponse);
-				return resp;
+				return generateVideosOperationFromMldev(this.apiClient, apiResponse);
 			});
 		}
 	}
@@ -5709,8 +5644,7 @@ var Operations = class extends BaseModule {
 				return httpResponse.json();
 			});
 			return response.then((apiResponse) => {
-				const resp = generateVideosOperationFromVertex(this.apiClient, apiResponse);
-				return resp;
+				return generateVideosOperationFromVertex(this.apiClient, apiResponse);
 			});
 		} else throw new Error("This method is only supported by the Vertex AI.");
 	}
@@ -5724,8 +5658,7 @@ const CONTENT_TYPE_HEADER = "Content-Type";
 const SERVER_TIMEOUT_HEADER = "X-Server-Timeout";
 const USER_AGENT_HEADER = "User-Agent";
 const GOOGLE_API_CLIENT_HEADER = "x-goog-api-client";
-const SDK_VERSION = "0.9.0";
-const LIBRARY_LABEL = `google-genai-sdk/${SDK_VERSION}`;
+const LIBRARY_LABEL = `google-genai-sdk/0.9.0`;
 const VERTEX_AI_API_DEFAULT_VERSION = "v1beta1";
 const GOOGLE_AI_API_DEFAULT_VERSION = "v1beta";
 const responseLineRE = /^data: (.*)(?:\n\n|\r\r|\r\n\r\n)/;
@@ -5735,7 +5668,7 @@ const responseLineRE = /^data: (.*)(?:\n\n|\r\r|\r\n\r\n)/;
 var ClientError = class extends Error {
 	constructor(message, stackTrace) {
 		if (stackTrace) super(message, { cause: stackTrace });
-		else super(message, { cause: new Error().stack });
+		else super(message, { cause: (/* @__PURE__ */ new Error()).stack });
 		this.message = message;
 		this.name = "ClientError";
 	}
@@ -5746,7 +5679,7 @@ var ClientError = class extends Error {
 var ServerError = class extends Error {
 	constructor(message, stackTrace) {
 		if (stackTrace) super(message, { cause: stackTrace });
-		else super(message, { cause: new Error().stack });
+		else super(message, { cause: (/* @__PURE__ */ new Error()).stack });
 		this.message = message;
 		this.name = "ServerError";
 	}
@@ -5810,8 +5743,7 @@ var ApiClient = class {
 	}
 	getRequestUrlInternal(httpOptions) {
 		if (!httpOptions || httpOptions.baseUrl === void 0 || httpOptions.apiVersion === void 0) throw new Error("HTTP options are not correctly set.");
-		const baseUrl = httpOptions.baseUrl.endsWith("/") ? httpOptions.baseUrl.slice(0, -1) : httpOptions.baseUrl;
-		const urlElement = [baseUrl];
+		const urlElement = [httpOptions.baseUrl.endsWith("/") ? httpOptions.baseUrl.slice(0, -1) : httpOptions.baseUrl];
 		if (httpOptions.apiVersion && httpOptions.apiVersion !== "") urlElement.push(httpOptions.apiVersion);
 		return urlElement.join("/");
 	}
@@ -5835,8 +5767,7 @@ var ApiClient = class {
 		const urlElement = [this.getRequestUrlInternal(httpOptions)];
 		if (prependProjectLocation) urlElement.push(this.getBaseResourcePath());
 		if (path$1 !== "") urlElement.push(path$1);
-		const url = new URL(`${urlElement.join("/")}`);
-		return url;
+		return new URL(`${urlElement.join("/")}`);
 	}
 	shouldPrependVertexProjectPath(request) {
 		if (this.clientOptions.apiKey) return false;
@@ -5923,12 +5854,11 @@ var ApiClient = class {
 					while (match) {
 						const processedChunkString = match[1];
 						try {
-							const partialResponse = new Response(processedChunkString, {
+							yield yield __await(new HttpResponse(new Response(processedChunkString, {
 								headers: response === null || response === void 0 ? void 0 : response.headers,
 								status: response === null || response === void 0 ? void 0 : response.status,
 								statusText: response === null || response === void 0 ? void 0 : response.statusText
-							});
-							yield yield __await(new HttpResponse(partialResponse));
+							})));
 							buffer = buffer.slice(match[0].length);
 							match = buffer.match(responseLineRE);
 						} catch (e) {
@@ -6033,13 +5963,8 @@ async function throwErrorIfNotOK(response) {
 			status: response.statusText
 		} };
 		const errorMessage = `got status: ${status} ${statusText}. ${JSON.stringify(errorBody)}`;
-		if (status >= 400 && status < 500) {
-			const clientError = new ClientError(errorMessage);
-			throw clientError;
-		} else if (status >= 500 && status < 600) {
-			const serverError = new ServerError(errorMessage);
-			throw serverError;
-		}
+		if (status >= 400 && status < 500) throw new ClientError(errorMessage);
+		else if (status >= 500 && status < 600) throw new ServerError(errorMessage);
 		throw new Error(errorMessage);
 	}
 }
@@ -6078,11 +6003,10 @@ async function uploadBlob(file, uploadUrl, apiClient) {
 	return responseJson["file"];
 }
 async function getBlobStat(file) {
-	const fileStat = {
+	return {
 		size: file.size,
 		type: file.type
 	};
-	return fileStat;
 }
 var BrowserUploader = class {
 	async upload(file, uploadUrl, apiClient) {
@@ -6212,11 +6136,11 @@ var GoogleGenAI = class {
 
 //#endregion
 //#region (ignored) node_modules/dotenv/lib
-var require_lib = __commonJS({ "node_modules/dotenv/lib"() {} });
+var require_lib = /* @__PURE__ */ __commonJS({ "node_modules/dotenv/lib": (() => {}) });
 
 //#endregion
 //#region node_modules/dotenv/package.json
-var require_package = __commonJS({ "node_modules/dotenv/package.json"(exports, module) {
+var require_package = /* @__PURE__ */ __commonJS({ "node_modules/dotenv/package.json": ((exports, module) => {
 	module.exports = {
 		"name": "dotenv",
 		"version": "16.5.0",
@@ -6275,17 +6199,16 @@ var require_package = __commonJS({ "node_modules/dotenv/package.json"(exports, m
 		"engines": { "node": ">=12" },
 		"browser": { "fs": false }
 	};
-} });
+}) });
 
 //#endregion
 //#region node_modules/dotenv/lib/main.js
-var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, module) {
+var require_main = /* @__PURE__ */ __commonJS({ "node_modules/dotenv/lib/main.js": ((exports, module) => {
 	const fs = require_lib();
 	const path = __require("path");
 	const os = __require("os");
 	const crypto = __require("crypto");
-	const packageJson = require_package();
-	const version = packageJson.version;
+	const version = require_package().version;
 	const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
 	function parse(src) {
 		const obj = {};
@@ -6310,7 +6233,7 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 		const vaultPath = _vaultPath(options);
 		const result = DotenvModule.configDotenv({ path: vaultPath });
 		if (!result.parsed) {
-			const err = new Error(`MISSING_DATA: Cannot parse ${vaultPath} for an unknown reason`);
+			const err = /* @__PURE__ */ new Error(`MISSING_DATA: Cannot parse ${vaultPath} for an unknown reason`);
 			err.code = "MISSING_DATA";
 			throw err;
 		}
@@ -6318,8 +6241,7 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 		const length = keys.length;
 		let decrypted;
 		for (let i = 0; i < length; i++) try {
-			const key = keys[i].trim();
-			const attrs = _instructions(result, key);
+			const attrs = _instructions(result, keys[i].trim());
 			decrypted = DotenvModule.decrypt(attrs.ciphertext, attrs.key);
 			break;
 		} catch (error) {
@@ -6344,7 +6266,7 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 			uri = new URL(dotenvKey);
 		} catch (error) {
 			if (error.code === "ERR_INVALID_URL") {
-				const err = new Error("INVALID_DOTENV_KEY: Wrong format. Must be in valid uri format like dotenv://:key_1234@dotenvx.com/vault/.env.vault?environment=development");
+				const err = /* @__PURE__ */ new Error("INVALID_DOTENV_KEY: Wrong format. Must be in valid uri format like dotenv://:key_1234@dotenvx.com/vault/.env.vault?environment=development");
 				err.code = "INVALID_DOTENV_KEY";
 				throw err;
 			}
@@ -6352,20 +6274,20 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 		}
 		const key = uri.password;
 		if (!key) {
-			const err = new Error("INVALID_DOTENV_KEY: Missing key part");
+			const err = /* @__PURE__ */ new Error("INVALID_DOTENV_KEY: Missing key part");
 			err.code = "INVALID_DOTENV_KEY";
 			throw err;
 		}
 		const environment = uri.searchParams.get("environment");
 		if (!environment) {
-			const err = new Error("INVALID_DOTENV_KEY: Missing environment part");
+			const err = /* @__PURE__ */ new Error("INVALID_DOTENV_KEY: Missing environment part");
 			err.code = "INVALID_DOTENV_KEY";
 			throw err;
 		}
 		const environmentKey = `DOTENV_VAULT_${environment.toUpperCase()}`;
 		const ciphertext = result.parsed[environmentKey];
 		if (!ciphertext) {
-			const err = new Error(`NOT_FOUND_DOTENV_ENVIRONMENT: Cannot locate environment ${environmentKey} in your .env.vault file.`);
+			const err = /* @__PURE__ */ new Error(`NOT_FOUND_DOTENV_ENVIRONMENT: Cannot locate environment ${environmentKey} in your .env.vault file.`);
 			err.code = "NOT_FOUND_DOTENV_ENVIRONMENT";
 			throw err;
 		}
@@ -6387,8 +6309,7 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 		return envPath[0] === "~" ? path.join(os.homedir(), envPath.slice(1)) : envPath;
 	}
 	function _configVault(options) {
-		const debug = Boolean(options && options.debug);
-		if (debug) _debug("Loading env from encrypted .env.vault");
+		if (Boolean(options && options.debug)) _debug("Loading env from encrypted .env.vault");
 		const parsed = DotenvModule._parseVault(options);
 		let processEnv = process.env;
 		if (options && options.processEnv != null) processEnv = options.processEnv;
@@ -6449,11 +6370,11 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 			const invalidKeyLength = error.message === "Invalid key length";
 			const decryptionFailed = error.message === "Unsupported state or unable to authenticate data";
 			if (isRange || invalidKeyLength) {
-				const err = new Error("INVALID_DOTENV_KEY: It must be 64 characters long (or more)");
+				const err = /* @__PURE__ */ new Error("INVALID_DOTENV_KEY: It must be 64 characters long (or more)");
 				err.code = "INVALID_DOTENV_KEY";
 				throw err;
 			} else if (decryptionFailed) {
-				const err = new Error("DECRYPTION_FAILED: Please check your DOTENV_KEY");
+				const err = /* @__PURE__ */ new Error("DECRYPTION_FAILED: Please check your DOTENV_KEY");
 				err.code = "DECRYPTION_FAILED";
 				throw err;
 			} else throw error;
@@ -6463,7 +6384,7 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 		const debug = Boolean(options && options.debug);
 		const override = Boolean(options && options.override);
 		if (typeof parsed !== "object") {
-			const err = new Error("OBJECT_REQUIRED: Please check the processEnv argument being passed to populate");
+			const err = /* @__PURE__ */ new Error("OBJECT_REQUIRED: Please check the processEnv argument being passed to populate");
 			err.code = "OBJECT_REQUIRED";
 			throw err;
 		}
@@ -6490,16 +6411,16 @@ var require_main = __commonJS({ "node_modules/dotenv/lib/main.js"(exports, modul
 	module.exports.parse = DotenvModule.parse;
 	module.exports.populate = DotenvModule.populate;
 	module.exports = DotenvModule;
-} });
-var import_main = __toESM(require_main());
+}) });
 
 //#endregion
 //#region src/use-ai.js
+var import_main = /* @__PURE__ */ __toESM(require_main());
 import_main.default.config();
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 async function main() {
 	const response = await ai.models.generateContent({
-		model: "gemini-2.5-flash-preview-04-17",
+		model: "gemini-2.5-flash",
 		contents: "Provide short example of a feedback to Pull Request - imagine that you are a reviewer."
 	});
 	console.log(response.text);
