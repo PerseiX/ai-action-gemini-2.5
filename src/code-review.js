@@ -22,7 +22,7 @@ export async function performAICodeReview(prDiff, apiKey) {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       contents: `
         You are a senior software engineer reviewing a pull request.
         Conduct a thorough review of the PR based on provided diff.
